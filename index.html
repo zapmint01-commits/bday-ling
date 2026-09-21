@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chingling's dinner 🎂</title>
+  <title>Celebrate with Chingling 🎂</title>
 
   <style>
     * {
@@ -23,7 +23,6 @@
       overflow-x: hidden;
     }
 
-    /* Floating background lights */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -67,10 +66,191 @@
       padding: 30px 15px;
     }
 
-    /* Envelope */
-    .envelope-container {
+    /* SHARED CARD */
+
+    .box {
+      width: min(500px, 100%);
       text-align: center;
-      transition: 0.7s ease;
+      padding: 40px 25px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 25px 80px rgba(0,0,0,.4);
+      animation: appear .8s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* PASSWORD */
+
+    .password-screen {
+      display: block;
+    }
+
+    .lock {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .password-screen h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .password-screen p {
+      color: #d8d8df;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 15px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(0,0,0,.25);
+      color: white;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .unlock,
+    .next-button,
+    .rsvp {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #ff1493, #7b5cff);
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .unlock:hover,
+    .next-button:hover,
+    .rsvp:hover {
+      transform: translateY(-2px);
+    }
+
+    .error {
+      color: #ff8bcf;
+      margin-top: 12px;
+      min-height: 20px;
+      font-size: 14px;
+    }
+
+    /* QUIZ */
+
+    .quiz {
+      display: none;
+    }
+
+    .quiz-progress {
+      color: #ff72bf;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .quiz h2 {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .quiz-question {
+      color: #ddd;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .answer {
+      width: 100%;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(0,0,0,.2);
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: .2s;
+    }
+
+    .answer:hover {
+      background: rgba(255,20,147,.2);
+      border-color: #ff4db3;
+      transform: translateY(-2px);
+    }
+
+    .answer.selected {
+      background: linear-gradient(
+        90deg,
+        rgba(255,20,147,.45),
+        rgba(123,92,255,.45)
+      );
+      border-color: #ff65bd;
+    }
+
+    .next-button {
+      display: none;
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+    }
+
+    .result-emoji {
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
+
+    .result h2 {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .result p {
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .score {
+      color: #ff72bf;
+      font-weight: bold;
+    }
+
+    /* ENVELOPE */
+
+    .envelope-container {
+      display: none;
+      text-align: center;
+      animation: appear .8s ease;
     }
 
     .envelope {
@@ -88,7 +268,7 @@
       height: 100%;
       background: linear-gradient(135deg, #ff1493, #c00070);
       border-radius: 12px;
-      box-shadow: 0 25px 70px rgba(255, 20, 147, 0.35);
+      box-shadow: 0 25px 70px rgba(255,20,147,.35);
       z-index: 2;
     }
 
@@ -102,7 +282,7 @@
       border-right: 150px solid transparent;
       border-top: 115px solid #ff4db3;
       transform-origin: top;
-      transition: transform 0.8s ease;
+      transition: transform .8s ease;
       z-index: 4;
     }
 
@@ -135,11 +315,12 @@
 
     @keyframes pulse {
       50% {
-        opacity: 0.55;
+        opacity: .55;
       }
     }
 
-    /* Invitation */
+    /* INVITATION */
+
     .invitation {
       display: none;
       width: min(600px, 100%);
@@ -147,27 +328,16 @@
       animation: appear 1s ease forwards;
     }
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
     .card {
       position: relative;
       padding: 45px 25px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,.2);
       border-radius: 30px;
-      background: rgba(255,255,255,0.09);
+      background: rgba(255,255,255,.09);
       backdrop-filter: blur(20px);
       box-shadow:
-        0 25px 80px rgba(0,0,0,0.4),
-        inset 0 0 40px rgba(255,255,255,0.04);
+        0 25px 80px rgba(0,0,0,.4),
+        inset 0 0 40px rgba(255,255,255,.04);
       overflow: hidden;
     }
 
@@ -181,7 +351,7 @@
     h1 {
       font-size: clamp(48px, 12vw, 82px);
       margin: 8px 0;
-      line-height: 0.95;
+      line-height: .95;
       background: linear-gradient(90deg, #fff, #ff65bd, #9fb0ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -196,7 +366,6 @@
     .name {
       font-size: clamp(30px, 8vw, 50px);
       font-weight: 800;
-      color: white;
       margin-bottom: 20px;
     }
 
@@ -224,7 +393,7 @@
     .detail {
       padding: 16px;
       border-radius: 16px;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,.2);
       border: 1px solid rgba(255,255,255,.08);
     }
 
@@ -241,30 +410,14 @@
       font-size: 18px;
     }
 
-    .rsvp {
-      border: none;
-      padding: 15px 30px;
-      border-radius: 50px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      background: linear-gradient(90deg, #ff1493, #7b5cff);
-      box-shadow: 0 10px 30px rgba(255,20,147,.3);
-      transition: .25s;
-    }
-
-    .rsvp:hover {
-      transform: translateY(-3px) scale(1.03);
-    }
-
     .footer {
       margin-top: 25px;
       color: #aaa;
       font-size: 13px;
     }
 
-    /* Confetti */
+    /* CONFETTI */
+
     .confetti {
       position: fixed;
       width: 8px;
@@ -280,7 +433,6 @@
       }
     }
 
-    /* Balloons */
     .balloon {
       position: fixed;
       bottom: -100px;
@@ -297,6 +449,7 @@
     }
 
     @media (max-width: 500px) {
+
       .envelope {
         width: 270px;
         height: 180px;
@@ -322,13 +475,104 @@
 
   <main class="page">
 
-    <!-- Opening Envelope -->
-    <section class="envelope-container" id="envelopeContainer">
+    <!-- PASSWORD SCREEN -->
 
-      <div class="envelope" id="envelope" onclick="openInvitation()">
+    <section class="password-screen box" id="passwordScreen">
+
+      <div class="lock">🔐</div>
+
+      <h2>Private Invitation</h2>
+
+      <p>
+        This invitation is just for Chingling's guests. 💗
+        <br>
+        Enter the secret code to continue.
+      </p>
+
+      <input
+        type="password"
+        id="password"
+        class="password-input"
+        placeholder="Enter invitation code"
+        onkeydown="handleEnter(event)"
+      >
+
+      <button class="unlock" onclick="checkPassword()">
+        Unlock Invitation ✨
+      </button>
+
+      <div class="error" id="error"></div>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section class="quiz box" id="quiz">
+
+      <div class="quiz-progress" id="progress">
+        Question 1 of 5
+      </div>
+
+      <h2>How Well Do You Know Chingling? 👀</h2>
+
+      <div class="quiz-question" id="question">
+      </div>
+
+      <div class="answers" id="answers">
+      </div>
+
+      <button
+        class="next-button"
+        id="nextButton"
+        onclick="nextQuestion()"
+      >
+        Next Question →
+      </button>
+
+    </section>
+
+
+    <!-- RESULT -->
+
+    <section class="result box" id="result">
+
+      <div class="result-emoji" id="resultEmoji">
+        🎉
+      </div>
+
+      <h2 id="resultTitle"></h2>
+
+      <p id="resultMessage"></p>
+
+      <button
+        class="next-button"
+        style="display:block"
+        onclick="showEnvelope()"
+      >
+        Okay, Show Me The Invitation 💌
+      </button>
+
+    </section>
+
+
+    <!-- ENVELOPE -->
+
+    <section
+      class="envelope-container"
+      id="envelopeContainer"
+    >
+
+      <div
+        class="envelope"
+        id="envelope"
+        onclick="openInvitation()"
+      >
+
         <div class="envelope-body"></div>
         <div class="flap"></div>
         <div class="heart">💌</div>
+
       </div>
 
       <p class="open-text">
@@ -338,12 +582,15 @@
     </section>
 
 
-    <!-- Invitation -->
+    <!-- INVITATION -->
+
     <section class="invitation" id="invitation">
 
       <div class="card">
 
-        <div class="small">You are invited to</div>
+        <div class="small">
+          You are invited to
+        </div>
 
         <h1>20</h1>
 
@@ -352,12 +599,13 @@
         </div>
 
         <div class="name">
-🎀  𝒞𝒽𝒾𝓃𝑔𝓁𝒾𝓃𝑔  🎀  
+         🎀  𝒞𝒽𝒾𝓃𝑔𝓁𝒾𝓃𝑔  🎀
         </div>
 
         <div class="joke">
-          “the night is stil young.” — Ling Minaj
+          “the night is still young.” — Ling Minaj
           <br>
+          <small>veni, vidi, vici</small>
         </div>
 
         <div class="details">
@@ -384,7 +632,7 @@
         </button>
 
         <div class="footer">
-          Come celebrate with Chingling! 🎂✨
+          Come celebrate Chingling's youthday with us! 🎂✨
         </div>
 
       </div>
@@ -396,24 +644,340 @@
 
   <script>
 
+    /* =========================
+       SECRET CODE
+       ========================= */
+
+    const SECRET_CODE = "secret code";
+
+
+    /* =========================
+       QUIZ QUESTIONS
+       ========================= */
+
+    const questions = [
+
+      {
+        question: "When's my birthday? 🎂",
+        answers: [
+          "26th September",
+          "28th September",
+          "20th September",
+          "29th September"
+        ],
+        correct: 1
+      },
+
+      {
+        question: "What can't I eat? 🍽️",
+        answers: [
+          "Lobster",
+          "Butterfish",
+          "Chicken & meat",
+          "Pizza"
+        ],
+        correct: 2
+      },
+
+      {
+        question: "What's my favourite FC? ⚽",
+        answers: [
+          "Atlético Madrid",
+          "FC Barcelona",
+          "Real Madrid CF",
+          "Manchester United"
+        ],
+        correct: 2
+      },
+
+      {
+        question: "True or False: I will love to see you soon. 👀💗",
+        answers: [
+          "True",
+          "False"
+        ],
+        correct: 0
+      },
+
+      {
+        question:
+          "Okay, last one... here's a riddle. 😂 " +
+          "What gets wetter the more it dries?",
+        answers: [
+          "A towel",
+          "A sponge",
+          "A fish",
+          "ling's birthday cake"
+        ],
+        correct: 0
+      }
+
+    ];
+
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswer = null;
+
+
+    /* =========================
+       PASSWORD
+       ========================= */
+
+    function handleEnter(event) {
+
+      if (event.key === "Enter") {
+        checkPassword();
+      }
+
+    }
+
+
+    function checkPassword() {
+
+      const input =
+        document.getElementById("password").value.trim();
+
+      const error =
+        document.getElementById("error");
+
+      if (input.toUpperCase() === SECRET_CODE) {
+
+        document.getElementById("passwordScreen").style.display =
+          "none";
+
+        document.getElementById("quiz").style.display =
+          "block";
+
+        loadQuestion();
+
+      } else {
+
+        error.innerText =
+          "Hmm... that's not the secret code 👀";
+
+        document.getElementById("password").value = "";
+
+      }
+
+    }
+
+
+    /* =========================
+       LOAD QUIZ QUESTION
+       ========================= */
+
+    function loadQuestion() {
+
+      selectedAnswer = null;
+
+      const question = questions[currentQuestion];
+
+      document.getElementById("progress").innerText =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+      document.getElementById("question").innerText =
+        question.question;
+
+      const answersContainer =
+        document.getElementById("answers");
+
+      answersContainer.innerHTML = "";
+
+      question.answers.forEach((answer, index) => {
+
+        const button =
+          document.createElement("button");
+
+        button.className = "answer";
+
+        button.innerText = answer;
+
+        button.onclick = () =>
+          selectAnswer(index, button);
+
+        answersContainer.appendChild(button);
+
+      });
+
+      const nextButton =
+        document.getElementById("nextButton");
+
+      nextButton.style.display = "none";
+
+      if (currentQuestion === questions.length - 1) {
+        nextButton.innerText = "See My Result ✨";
+      } else {
+        nextButton.innerText = "Next Question →";
+      }
+
+    }
+
+
+    /* =========================
+       SELECT ANSWER
+       ========================= */
+
+    function selectAnswer(index, button) {
+
+      selectedAnswer = index;
+
+      document
+        .querySelectorAll(".answer")
+        .forEach(answer => {
+          answer.classList.remove("selected");
+        });
+
+      button.classList.add("selected");
+
+      document.getElementById("nextButton").style.display =
+        "block";
+
+    }
+
+
+    /* =========================
+       NEXT QUESTION
+       ========================= */
+
+    function nextQuestion() {
+
+      if (selectedAnswer === null) {
+        return;
+      }
+
+      if (
+        selectedAnswer ===
+        questions[currentQuestion].correct
+      ) {
+        score++;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+
+        loadQuestion();
+
+      } else {
+
+        showResult();
+
+      }
+
+    }
+
+
+    /* =========================
+       SHOW RESULT
+       ========================= */
+
+    function showResult() {
+
+      document.getElementById("quiz").style.display =
+        "none";
+
+      const result =
+        document.getElementById("result");
+
+      result.style.display = "block";
+
+      const emoji =
+        document.getElementById("resultEmoji");
+
+      const title =
+        document.getElementById("resultTitle");
+
+      const message =
+        document.getElementById("resultMessage");
+
+
+      if (score >= 4) {
+
+        emoji.innerText = "👑💗";
+
+        title.innerText =
+          "YOU'RE Chingling'S BFF!";
+
+        message.innerHTML =
+          `You scored <span class="score">${score}/5</span>! 🎉
+          <br><br>
+          Okayyyy, look at you knowing AC7 like
+          you've got access to the secret archives.bahna daal 😭
+          <br><br>
+          Official BFF status unlocked. 🫶🏽`;
+
+      } else {
+
+        emoji.innerText = "📈😭";
+
+        title.innerText =
+          "FRIENDSHIP LEVEL UP REQUIRED!";
+
+        message.innerHTML =
+          `You scored <span class="score">${score}/5</span>.
+          <br><br>
+          I love you, but respectfully...
+          <strong>do your research. 😭</strong>
+          <br><br>
+          Friendship level-up mission activated.
+          Get to know Chingling better! 😂💗`;
+
+      }
+
+    }
+
+
+    /* =========================
+       SHOW ENVELOPE
+       ========================= */
+
+    function showEnvelope() {
+
+      document.getElementById("result").style.display =
+        "none";
+
+      document.getElementById("envelopeContainer").style.display =
+        "block";
+
+    }
+
+
+    /* =========================
+       OPEN ENVELOPE
+       ========================= */
+
     function openInvitation() {
 
-      const envelope = document.getElementById("envelope");
-      const container = document.getElementById("envelopeContainer");
-      const invitation = document.getElementById("invitation");
+      const envelope =
+        document.getElementById("envelope");
+
+      const container =
+        document.getElementById("envelopeContainer");
+
+      const invitation =
+        document.getElementById("invitation");
 
       envelope.classList.add("open");
 
       setTimeout(() => {
+
         container.style.display = "none";
+
         invitation.style.display = "block";
 
         createConfetti();
+
         createBalloons();
 
       }, 800);
+
     }
 
+
+    /* =========================
+       CONFETTI
+       ========================= */
 
     function createConfetti() {
 
@@ -427,13 +991,18 @@
 
       for (let i = 0; i < 100; i++) {
 
-        const piece = document.createElement("div");
+        const piece =
+          document.createElement("div");
 
         piece.className = "confetti";
 
-        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.left =
+          Math.random() * 100 + "vw";
+
         piece.style.background =
-          colors[Math.floor(Math.random() * colors.length)];
+          colors[
+            Math.floor(Math.random() * colors.length)
+          ];
 
         piece.style.animationDuration =
           (Math.random() * 3 + 2) + "s";
@@ -446,22 +1015,36 @@
         setTimeout(() => {
           piece.remove();
         }, 6000);
+
       }
+
     }
 
 
+    /* =========================
+       BALLOONS
+       ========================= */
+
     function createBalloons() {
 
-      const emojis = ["🎈", "🎈", "💗", "🎈"];
+      const emojis = [
+        "🎈",
+        "🎈",
+        "💗",
+        "🎈"
+      ];
 
       for (let i = 0; i < 12; i++) {
 
-        const balloon = document.createElement("div");
+        const balloon =
+          document.createElement("div");
 
         balloon.className = "balloon";
 
         balloon.innerText =
-          emojis[Math.floor(Math.random() * emojis.length)];
+          emojis[
+            Math.floor(Math.random() * emojis.length)
+          ];
 
         balloon.style.left =
           Math.random() * 100 + "vw";
@@ -473,15 +1056,21 @@
           Math.random() * 5 + "s";
 
         document.body.appendChild(balloon);
+
       }
+
     }
 
+
+    /* =========================
+       RSVP
+       ========================= */
 
     function rsvp() {
 
       alert(
-        "YAY! 🎉 See you at Chingling's birthday!\n\n" +
-        "September 26th @ 6PM\n" +
+        "YAY! 🎉 See you at Chingling's birthday!\\n\\n" +
+        "September 26th @ 6PM\\n" +
         "Senegambia Beach Hotel 💗"
       );
 
