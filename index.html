@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chingling's dinner 🎂</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #ff2fa3 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, #3155ff 0%, transparent 25%),
+        #080b2d;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Floating background lights */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb.one {
+      width: 180px;
+      height: 180px;
+      background: #ff1493;
+      top: 5%;
+      left: -50px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .orb.two {
+      width: 220px;
+      height: 220px;
+      background: #3155ff;
+      bottom: 5%;
+      right: -70px;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-30px);
+      }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 15px;
+    }
+
+    /* Envelope */
+    .envelope-container {
+      text-align: center;
+      transition: 0.7s ease;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      position: relative;
+      margin: auto;
+      cursor: pointer;
+      perspective: 800px;
+    }
+
+    .envelope-body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff1493, #c00070);
+      border-radius: 12px;
+      box-shadow: 0 25px 70px rgba(255, 20, 147, 0.35);
+      z-index: 2;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 150px solid transparent;
+      border-right: 150px solid transparent;
+      border-top: 115px solid #ff4db3;
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      z-index: 4;
+    }
+
+    .heart {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      animation: heartbeat 1.2s infinite;
+    }
+
+    @keyframes heartbeat {
+      50% {
+        transform: translate(-50%, -50%) scale(1.15);
+      }
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .open-text {
+      margin-top: 25px;
+      font-size: 16px;
+      color: #ffd7f0;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.55;
+      }
+    }
+
+    /* Invitation */
+    .invitation {
+      display: none;
+      width: min(600px, 100%);
+      text-align: center;
+      animation: appear 1s ease forwards;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card {
+      position: relative;
+      padding: 45px 25px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 25px 80px rgba(0,0,0,0.4),
+        inset 0 0 40px rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .small {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 12px;
+      color: #ff9ed4;
+    }
+
+    h1 {
+      font-size: clamp(48px, 12vw, 82px);
+      margin: 8px 0;
+      line-height: 0.95;
+      background: linear-gradient(90deg, #fff, #ff65bd, #9fb0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .turning {
+      font-size: 18px;
+      color: #ddd;
+      margin-bottom: 8px;
+    }
+
+    .name {
+      font-size: clamp(30px, 8vw, 50px);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .joke {
+      display: inline-block;
+      margin: 15px auto 30px;
+      padding: 12px 18px;
+      border-radius: 50px;
+      background: linear-gradient(
+        90deg,
+        rgba(255,20,147,.25),
+        rgba(49,85,255,.25)
+      );
+      border: 1px solid rgba(255,255,255,.15);
+      color: #ffd8ef;
+      font-size: 15px;
+    }
+
+    .details {
+      display: grid;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .detail {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .detail strong {
+      display: block;
+      color: #ff72bf;
+      margin-bottom: 5px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .detail span {
+      font-size: 18px;
+    }
+
+    .rsvp {
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ff1493, #7b5cff);
+      box-shadow: 0 10px 30px rgba(255,20,147,.3);
+      transition: .25s;
+    }
+
+    .rsvp:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 14px;
+      top: -20px;
+      z-index: 10;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+
+    /* Balloons */
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      font-size: 55px;
+      z-index: 0;
+      animation: balloonUp linear infinite;
+      opacity: .6;
+    }
+
+    @keyframes balloonUp {
+      to {
+        transform: translateY(-120vh) rotate(10deg);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .envelope {
+        width: 270px;
+        height: 180px;
+      }
+
+      .flap {
+        border-left-width: 135px;
+        border-right-width: 135px;
+        border-top-width: 105px;
+      }
+
+      .card {
+        padding: 38px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <main class="page">
+
+    <!-- Opening Envelope -->
+    <section class="envelope-container" id="envelopeContainer">
+
+      <div class="envelope" id="envelope" onclick="openInvitation()">
+        <div class="envelope-body"></div>
+        <div class="flap"></div>
+        <div class="heart">💌</div>
+      </div>
+
+      <p class="open-text">
+        Tap the invitation to open ✨
+      </p>
+
+    </section>
+
+
+    <!-- Invitation -->
+    <section class="invitation" id="invitation">
+
+      <div class="card">
+
+        <div class="small">You are invited to</div>
+
+        <h1>20</h1>
+
+        <div class="turning">
+          years of being iconic...
+        </div>
+
+        <div class="name">
+🎀  𝒞𝒽𝒾𝓃𝑔𝓁𝒾𝓃𝑔  🎀  
+        </div>
+
+        <div class="joke">
+          “the night is stil young.” — Ling Minaj
+          <br>
+        </div>
+
+        <div class="details">
+
+          <div class="detail">
+            <strong>📅 Date</strong>
+            <span>September 26th</span>
+          </div>
+
+          <div class="detail">
+            <strong>⏰ Time</strong>
+            <span>6:00 PM</span>
+          </div>
+
+          <div class="detail">
+            <strong>📍 Location</strong>
+            <span>Senegambia Beach Hotel</span>
+          </div>
+
+        </div>
+
+        <button class="rsvp" onclick="rsvp()">
+          💖 I'm Coming!
+        </button>
+
+        <div class="footer">
+          Come celebrate with Chingling! 🎂✨
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function openInvitation() {
+
+      const envelope = document.getElementById("envelope");
+      const container = document.getElementById("envelopeContainer");
+      const invitation = document.getElementById("invitation");
+
+      envelope.classList.add("open");
+
+      setTimeout(() => {
+        container.style.display = "none";
+        invitation.style.display = "block";
+
+        createConfetti();
+        createBalloons();
+
+      }, 800);
+    }
+
+
+    function createConfetti() {
+
+      const colors = [
+        "#ff1493",
+        "#ff65bd",
+        "#ffffff",
+        "#3155ff",
+        "#8b5cf6"
+      ];
+
+      for (let i = 0; i < 100; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration =
+          (Math.random() * 3 + 2) + "s";
+
+        piece.style.animationDelay =
+          Math.random() * 1.5 + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 6000);
+      }
+    }
+
+
+    function createBalloons() {
+
+      const emojis = ["🎈", "🎈", "💗", "🎈"];
+
+      for (let i = 0; i < 12; i++) {
+
+        const balloon = document.createElement("div");
+
+        balloon.className = "balloon";
+
+        balloon.innerText =
+          emojis[Math.floor(Math.random() * emojis.length)];
+
+        balloon.style.left =
+          Math.random() * 100 + "vw";
+
+        balloon.style.animationDuration =
+          (Math.random() * 8 + 8) + "s";
+
+        balloon.style.animationDelay =
+          Math.random() * 5 + "s";
+
+        document.body.appendChild(balloon);
+      }
+    }
+
+
+    function rsvp() {
+
+      alert(
+        "YAY! 🎉 See you at Chingling's birthday!\n\n" +
+        "September 26th @ 6PM\n" +
+        "Senegambia Beach Hotel 💗"
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
